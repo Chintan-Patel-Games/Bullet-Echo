@@ -49,5 +49,5 @@ A 2D tactical shooter where players navigate a grid-based environment, avoiding 
 
 ## Contact
 - Developer: Chintan Patel
-- Email: chintanpateit024@gmail.com
+- Email: chintanpatelit024@gmail.com
 - GitHub: https://github.com/Chintan-Patel-Games
