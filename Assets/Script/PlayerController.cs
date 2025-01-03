@@ -1,25 +1,23 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveStep = 1f;        // Distance to move in each step
-    public float rotationStep = 90f;  // Rotation angle in degrees per key press
+    public float moveStep = 1f; // Distance to move in each step
+    public float rotationStep = 90f; // Rotation angle in degrees per key press
 
     void Update()
     {
-        // Forward Movement
+        // Handle player movement input
         if (Input.GetKeyDown(KeyCode.W)) MoveForward();
-
-        // Rotation
-        if (Input.GetKeyDown(KeyCode.D)) Rotate(-rotationStep);
         if (Input.GetKeyDown(KeyCode.A)) Rotate(rotationStep);
+        if (Input.GetKeyDown(KeyCode.D)) Rotate(-rotationStep);
     }
 
     void MoveForward()
     {
-        // Move the player forward in the direction it is facing
-        Vector3 forward = transform.up; // In 2D, "up" is the forward direction
-        transform.position += forward * moveStep;
+        Vector3 forward = transform.up;
+        transform.position += forward * moveStep; // Move the player
     }
 
     void Rotate(float angle)
