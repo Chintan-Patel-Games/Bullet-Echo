@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8699306083646697512}
   - component: {fileID: 8820771435332267210}
-  - component: {fileID: 4802984062912452091}
   m_Layer: 0
   m_Name: Walkable Tile
   m_TagString: Untagged
@@ -46,19 +45,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &4802984062912452091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1141422758685861778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8652e882d891c4a46aa22af9967d45b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isWalkable: 1
 --- !u!1 &7408876071950780362
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +93,7 @@ Tilemap:
       m_TileIndex: 2
       m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
+      m_TileColorIndex: 1
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
@@ -146,10 +132,10 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 3.7762e-41, g: 3.7762e-41, b: 3.7762e-41, a: 3.7762e-41}
   - m_RefCount: 1
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-  - m_RefCount: 0
-    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}

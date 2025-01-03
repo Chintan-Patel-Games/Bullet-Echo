@@ -2709,6 +2709,10 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7247394710180015791, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
+      propertyPath: tilemap
+      value: 
+      objectReference: {fileID: 655720886}
+    - target: {fileID: 7247394710180015791, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
       propertyPath: walkableTilemap
       value: 
       objectReference: {fileID: 655720886}
