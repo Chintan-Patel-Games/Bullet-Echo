@@ -1,30 +1,105 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveStep = 1f;        // Distance to move in each step
-    public float rotationStep = 90f;  // Rotation angle in degrees per key press
+    public float moveSpeed = 2f; // Speed of the movement (units per second)
+    public Tilemap tilemap; // Assign your Tilemap in the Inspector
+    public TileBase walkableTile; // Assign your walkable tile in the Inspector
+    public GameObject bulletPrefab;  // Assign the bullet prefab in the Inspector
+    public Transform bulletSpawnPoint;  // A child object to determine where bullets spawn
+    public float shootCooldown = 0.25f;  // Time between shots
+
+    private bool canShoot = true;
+    private bool isMoving = false; // To track if the player is currently moving
+    private bool isRotating = false; // To track if the player is currently rotating
 
     void Update()
     {
-        // Forward Movement
-        if (Input.GetKeyDown(KeyCode.W)) MoveForward();
+        if (!isMoving && !isRotating) // Allow input only when not moving or rotating
+        {
+            if (Input.GetKey(KeyCode.W)) StartCoroutine(Move(transform.up));
+            else if (Input.GetKey(KeyCode.A)) StartCoroutine(Rotate(90f));
+            else if (Input.GetKey(KeyCode.D)) StartCoroutine(Rotate(-90f));
+        }
 
-        // Rotation
-        if (Input.GetKeyDown(KeyCode.D)) Rotate(-rotationStep);
-        if (Input.GetKeyDown(KeyCode.A)) Rotate(rotationStep);
+        // Handle shooting
+        if (Input.GetKey(KeyCode.Space) && canShoot && !isRotating)
+        {
+            Shoot();
+        }
     }
 
-    void MoveForward()
+    System.Collections.IEnumerator Move(Vector3 direction)
     {
-        // Move the player forward in the direction it is facing
-        Vector3 forward = transform.up; // In 2D, "up" is the forward direction
-        transform.position += forward * moveStep;
+        Vector3 targetPosition = transform.position + direction;
+
+        // Check if the target position is walkable
+        if (IsWalkable(targetPosition))
+        {
+            isMoving = true;
+
+            // Gradually move to the target position
+            while ((transform.position - targetPosition).sqrMagnitude > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                yield return null; // Wait for the next frame
+            }
+
+            transform.position = targetPosition; // Snap to the target position
+        }
+
+        isMoving = false;
     }
 
-    void Rotate(float angle)
+    System.Collections.IEnumerator Rotate(float angle)
     {
-        // Rotate the player around the Z-axis
-        transform.Rotate(0, 0, angle);
+        isRotating = true;
+
+        // Calculate the target rotation
+        Quaternion startRotation = transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + angle);
+
+        // Gradually rotate to the target rotation
+        float elapsedTime = 0f;
+        float rotationDuration = 0.2f; // Time it takes to rotate
+        while (elapsedTime < rotationDuration)
+        {
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / rotationDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        transform.rotation = targetRotation; // Snap to the target rotation
+        isRotating = false;
+    }
+
+    bool IsWalkable(Vector3 worldPosition)
+    {
+        // Convert world position to cell position
+        Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
+
+        // Get the tile at the cell position
+        TileBase tile = tilemap.GetTile(cellPosition);
+
+        // Check if the tile is walkable
+        return tile == walkableTile;
+    }
+
+    void Shoot()
+    {
+        canShoot = false;
+
+        // Instantiate the bullet at the spawn point and in the player's current rotation
+        Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+
+        // Start cooldown timer
+        StartCoroutine(ShootCooldown());
+    }
+
+    System.Collections.IEnumerator ShootCooldown()
+    {
+        yield return new WaitForSeconds(shootCooldown);
+        canShoot = true;
     }
 }
