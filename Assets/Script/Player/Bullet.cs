@@ -18,11 +18,11 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // if (other.CompareTag("Enemy"))
-        // {
+        if (other.CompareTag("Enemy") && other as CircleCollider2D)
+        {
             Debug.Log("Enemy hit!");
             Destroy(other.gameObject);  // Destroy enemy
             Destroy(gameObject);  // Destroy bullet
-        // }
+        }
     }
 }

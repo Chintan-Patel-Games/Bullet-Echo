@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public TileBase walkableTile; // Assign your walkable tile in the Inspector
     public GameObject bulletPrefab;  // Assign the bullet prefab in the Inspector
     public Transform bulletSpawnPoint;  // A child object to determine where bullets spawn
-    public float shootCooldown = 0.25f;  // Time between shots
+    public float shootCooldown = 0.35f;  // Time between shots
 
     private bool canShoot = true;
     private bool isMoving = false; // To track if the player is currently moving
