@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.Rendering.Universal; // For Light2D
 
 public class EnemyAI : MonoBehaviour
 {
@@ -7,43 +8,21 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private GridManager gridManager;
     [SerializeField] private float moveSpeed = 2f; // Speed of movement
     [SerializeField] private float rotationDuration = 0.2f; // Time taken to rotate to the next direction
-    [SerializeField] private GameObject torch; // Torch GameObject (child of Enemy)
-    public Color alertColor = new Color(1f, 0f, 0f, 0.5f); // Red with transparency
-    public Color normalColor = new Color(1f, 1f, 1f, 0.5f); // White with transparency
+    [SerializeField] private GameObject torch; // Torch Light GameObject (Light2D)
+    public Color alertColor = new Color(1f, 0f, 0f, 1f); // Red
+    public Color normalColor = new Color(1f, 1f, 1f, 1f); // White
     public Transform player; // Assign the player's Transform in the Inspector
 
-    private SpriteRenderer torchSprite; // Reference to the SpriteRenderer
-    private PolygonCollider2D torchCollider; // Reference to the PolygonCollider2D
+    private Light2D torchLight; // Reference to the Light2D
+    private PolygonCollider2D torchCollider; // Reference to the PolygonCollider2D for torch
     private bool isFollowingPlayer = false;
     private int currentTargetIndex = 0;
     private bool isMoving = false; // To track if the enemy is currently moving
 
     void Start()
     {
-        // Get components from the torch GameObject
-        if (torch != null)
-        {
-            torchSprite = torch.GetComponent<SpriteRenderer>();
-            torchCollider = torch.GetComponent<PolygonCollider2D>();
-
-            if (torchSprite != null)
-            {
-                torchSprite.color = normalColor; // Set initial torch color
-            }
-            else
-            {
-                Debug.LogError("Torch SpriteRenderer not found!");
-            }
-
-            if (torchCollider == null)
-            {
-                Debug.LogError("Torch PolygonCollider2D not found!");
-            }
-        }
-        else
-        {
-            Debug.LogError("Torch GameObject not assigned in the Inspector!");
-        }
+        torchLight = torch.GetComponent<Light2D>();
+        torchCollider = torch.GetComponent<PolygonCollider2D>();
 
         if (patrolPath.Length > 0)
         {
@@ -133,9 +112,9 @@ public class EnemyAI : MonoBehaviour
     {
         isFollowingPlayer = true;
 
-        if (torchSprite != null)
+        if (torchLight != null)
         {
-            torchSprite.color = alertColor; // Change torch color to red
+            torchLight.color = alertColor; // Change torch color to red
         }
     }
 
