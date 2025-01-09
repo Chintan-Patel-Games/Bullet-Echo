@@ -652,10 +652,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 270
       objectReference: {fileID: 0}
-    - target: {fileID: 4733513930756558750, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7247394710180015791, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
       propertyPath: tilemap
       value: 

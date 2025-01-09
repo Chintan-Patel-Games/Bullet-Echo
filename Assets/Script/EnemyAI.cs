@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.Universal; // For Light2D
+using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -9,15 +9,19 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f; // Speed of movement
     [SerializeField] private float rotationDuration = 0.2f; // Time taken to rotate to the next direction
     [SerializeField] private GameObject torch; // Torch Light GameObject (Light2D)
-    public Color alertColor = new Color(1f, 0f, 0f, 1f); // Red
-    public Color normalColor = new Color(1f, 1f, 1f, 1f); // White
-    public Transform player; // Assign the player's Transform in the Inspector
+    [SerializeField] private GameObject bulletPrefab;  // Assign the bullet prefab
+    [SerializeField] private Transform bulletSpawnPoint;  // A child object to determine where bullets spawn
+    [SerializeField] private float shootCooldown = 0.35f;  // Time between shots
+    [SerializeField] private Color alertColor = new Color(1f, 0f, 0f, 1f); // Red
+    [SerializeField] private Color normalColor = new Color(1f, 1f, 1f, 1f); // White
+    [SerializeField] private Transform player; // Assign the player's Transform in the Inspector
 
     private Light2D torchLight; // Reference to the Light2D
     private PolygonCollider2D torchCollider; // Reference to the PolygonCollider2D for torch
     private bool isFollowingPlayer = false;
     private int currentTargetIndex = 0;
     private bool isMoving = false; // To track if the enemy is currently moving
+    private bool canShoot = true;
 
     void Start()
     {
@@ -106,6 +110,8 @@ public class EnemyAI : MonoBehaviour
 
         // Move toward the player
         transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+
+        Shoot();
     }
 
     public void TriggerAlert()
@@ -126,5 +132,26 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("Player detected!");
             TriggerAlert();
         }
+    }
+    
+    void Shoot()
+    {
+        // Check if the enemy can shoot, and if so, shoot and start cooldown
+        if (canShoot)
+        {
+            canShoot = false;
+
+            // Instantiate the bullet at the spawn point and in the player's current rotation
+            Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+
+            // Start cooldown timer
+            StartCoroutine(ShootCooldown());
+        }
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        yield return new WaitForSeconds(shootCooldown);
+        canShoot = true; // Enemy can shoot again after the cooldown period
     }
 }
