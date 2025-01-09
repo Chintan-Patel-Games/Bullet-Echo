@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 2f; // Speed of the movement (units per second)
-    public Tilemap tilemap; // Assign your Tilemap in the Inspector
-    public TileBase walkableTile; // Assign your walkable tile in the Inspector
-    public GameObject bulletPrefab;  // Assign the bullet prefab in the Inspector
-    public Transform bulletSpawnPoint;  // A child object to determine where bullets spawn
-    public float shootCooldown = 0.25f;  // Time between shots
+    [SerializeField] private float moveSpeed = 2f; // Speed of the movement (units per second)
+    [SerializeField] private Tilemap tilemap; // Assign your Tilemap
+    [SerializeField] private TileBase walkableTile; // Assign your walkable tile
+    [SerializeField] private GameObject bulletPrefab;  // Assign the bullet prefab
+    [SerializeField] private Transform bulletSpawnPoint;  // A child object to determine where bullets spawn
+    [SerializeField] private float shootCooldown = 0.35f;  // Time between shots
 
     private bool canShoot = true;
     private bool isMoving = false; // To track if the player is currently moving
@@ -30,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator Move(Vector3 direction)
+    private IEnumerator Move(Vector3 direction)
     {
         Vector3 targetPosition = transform.position + direction;
 
@@ -52,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = false;
     }
 
-    System.Collections.IEnumerator Rotate(float angle)
+    private IEnumerator Rotate(float angle)
     {
         isRotating = true;
 
@@ -97,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(ShootCooldown());
     }
 
-    System.Collections.IEnumerator ShootCooldown()
+    private IEnumerator ShootCooldown()
     {
         yield return new WaitForSeconds(shootCooldown);
         canShoot = true;
