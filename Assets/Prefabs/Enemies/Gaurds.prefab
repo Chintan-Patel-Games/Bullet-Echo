@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 817301805646492818}
   - component: {fileID: 7973173916200226104}
   - component: {fileID: 8969390924627055937}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Torch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6783406468271645931}
   - component: {fileID: 5361316889723132344}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 2802315791765813386}
   - component: {fileID: 3619850574269998294}
   - component: {fileID: 3584373874807335381}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Gaurds
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -422,7 +422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6775050103635213916}
   - component: {fileID: 8689247282323853103}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
