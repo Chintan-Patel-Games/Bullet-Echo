@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2449387446503439554}
   - component: {fileID: 3584373874807335381}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Gaurds
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   gridManager: {fileID: 0}
   moveSpeed: 2
   rotationDuration: 0.2
-  torch: {fileID: 0}
+  torch: {fileID: 7352321808446426878}
   alertColor: {r: 1, g: 0, b: 0, a: 0.33333334}
   normalColor: {r: 1, g: 1, b: 1, a: 0.33333334}
   player: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 6922547372498392217}
   m_Layer: 0
   m_Name: Light
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
