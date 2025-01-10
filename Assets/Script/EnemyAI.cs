@@ -7,15 +7,15 @@ using System.Linq;
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private Vector2Int[] patrolPath; // Array of grid positions for patrol
-    [SerializeField] private GridManager gridManager; // Reference to your grid manager
+    [SerializeField] private GridManager gridManager; // Reference to grid manager
     [SerializeField] private float moveSpeed = 2f; // Speed of movement
     [SerializeField] private float rotationDuration = 0.2f; // Time taken to rotate to the next direction
     [SerializeField] private GameObject torch; // Torch Light GameObject (Light2D)
     [SerializeField] private GameObject bulletPrefab; // Assign the bullet prefab
     [SerializeField] private Transform bulletSpawnPoint; // A child object to determine where bullets spawn
     [SerializeField] private float shootCooldown = 0.35f; // Time between shots
-    [SerializeField] private Color alertColor = new Color(1f, 0f, 0f, 1f); // Red
-    [SerializeField] private Color normalColor = new Color(1f, 1f, 1f, 1f); // White
+    [SerializeField] private Color alertColor = new Color(1f, 0f, 0f, 1f); // Red Light
+    [SerializeField] private Color normalColor = new Color(1f, 1f, 1f, 1f); // White Light
     [SerializeField] private Transform player; // Assign the player's Transform in the Inspector
     [SerializeField] private float detectionRange = 2f; // Enemy's detection range
 
@@ -74,7 +74,7 @@ public class EnemyAI : MonoBehaviour
             // Update the target index for the next patrol point
             currentTargetIndex = (currentTargetIndex + 1) % patrolPath.Length;
 
-            yield return new WaitForSeconds(0.5f); // Optional pause at each patrol point
+            yield return new WaitForSeconds(0.5f); // Pause at each patrol point
         }
     }
 
@@ -183,7 +183,7 @@ public class EnemyAI : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the player has entered the torch's detection area
-        if (other.CompareTag("Player")) // Ensure the player GameObject has the "Player" tag
+        if (other.CompareTag("Player"))
         {
             TriggerAlert();
         }
@@ -239,7 +239,7 @@ public class EnemyAI : MonoBehaviour
                     step = cameFrom[step];
                 }
 
-                path.Enqueue(start); // Optional: include the starting position
+                path.Enqueue(start); // Include the starting position
                 path = new Queue<Vector2Int>(path.Reverse()); // Reverse the path
                 break;
             }

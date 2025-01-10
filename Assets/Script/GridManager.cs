@@ -4,9 +4,8 @@ using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap tilemap; // Assign your Tilemap in the Inspector
-    [SerializeField] private TileBase walkableTile; // Assign the walkable tile in the Inspector
-    [SerializeField] private TileBase nonWalkableTile; // Assign the non-walkable tile in the Inspector
+    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private TileBase walkableTile;
 
     private int rows, columns; // Grid size
     private bool[,] walkableCells; // Walkable status of each cell
@@ -33,7 +32,7 @@ public class GridManager : MonoBehaviour
                 Vector3Int cellPosition = new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0);
                 TileBase tile = tilemap.GetTile(cellPosition);
 
-                walkableCells[x, y] = (tile == walkableTile);
+                walkableCells[x, y] = tile == walkableTile;
             }
         }
     }
@@ -89,8 +88,8 @@ public class GridManager : MonoBehaviour
 
     public bool IsValidPosition(Vector2Int position)
     {
-        int width = columns; // Replace with your grid width
-        int height = rows; // Replace with your grid height
+        int width = columns;
+        int height = rows;
 
         return position.x >= 0 && position.x < width && position.y >= 0 && position.y < height;
     }

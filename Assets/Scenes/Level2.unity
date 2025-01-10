@@ -2087,7 +2087,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 6699201156835332653}
   walkableTile: {fileID: 11400000, guid: 1cb5a59b39095d3439175599df58018a, type: 2}
-  nonWalkableTile: {fileID: 11400000, guid: e86f8f0a88102cf4e95506569bc4f369, type: 2}
 --- !u!1001 &4837851938617947309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9372,6 +9371,14 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 6699201156835332653}
+    - target: {fileID: 7247394710180015791, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
+      propertyPath: finishTile
+      value: 
+      objectReference: {fileID: 11400000, guid: cfc2b17077a2f2c47817b253b3a76798, type: 2}
+    - target: {fileID: 7247394710180015791, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 162355556}
     - target: {fileID: 7616831098086757112, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
       propertyPath: m_Name
       value: Alan

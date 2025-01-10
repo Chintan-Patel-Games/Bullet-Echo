@@ -5,19 +5,10 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemiesParent; // Array of enemies in the level
 
-    void Start()
-    {
-        if (enemiesParent == null)
-        {
-            enemiesParent = GameObject.Find("Enemies"); // Find the parent object dynamically if not set
-        }
-    }
-
     public void CompleteLevel()
     {
         if (AreAllEnemiesDead())
         {
-            Debug.Log("Level Complete!");
             LoadNextLevel(); // Load the next level
         }
         else
@@ -85,7 +76,7 @@ public class LevelManager : MonoBehaviour
                 break;
 
             case "Level2":
-                Debug.Log("No more levels to load.");
+                LoadScene(SceneName.Lobby);
                 break;
 
             default:

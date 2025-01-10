@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
         // Check if the tile is the finish tile
         if (tile == finishTile)
         {
-            Debug.Log("Player reached the finish tile!");
             levelManager.CompleteLevel(); // Call CompleteLevel method from LevelManager
         }
     }
@@ -141,7 +140,6 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log("Player Health: " + currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -151,8 +149,6 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Player has died!");
-        // Add your game over logic here, e.g., restart the level or show a game over screen
         gameObject.SetActive(false); // Disable the player object
     }
 }
