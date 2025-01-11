@@ -14,10 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;  // Assign the bullet prefab
     [SerializeField] private Transform bulletSpawnPoint;  // A child object to determine where bullets spawn
     [SerializeField] private float shootCooldown = 0.35f;  // Time between shots
+    public int BulletCount { get; private set; } = 5; // Example default bullet count
 
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 100; // Maximum health of the player
     private int currentHealth;
+    public int CurrentHealth => currentHealth; // Expose current health
+
 
     [SerializeField] private LevelManager levelManager; // Reference to the LevelManager
 
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
         if (!isMoving && !isRotating) // Allow input only when not moving or rotating
         {
             if (Input.GetKey(KeyCode.W)) StartCoroutine(Move(transform.up));
+            else if (Input.GetKey(KeyCode.S)) StartCoroutine(Move(-transform.up));
             else if (Input.GetKey(KeyCode.A)) StartCoroutine(Rotate(90f));
             else if (Input.GetKey(KeyCode.D)) StartCoroutine(Rotate(-90f));
         }
@@ -122,10 +126,18 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
+        if (BulletCount <= 0)
+        {
+            return;
+        }
+
         canShoot = false;
 
         // Instantiate the bullet at the spawn point and in the player's current rotation
         Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+
+        // Decrease the bullet count
+        BulletCount--;
 
         // Start cooldown timer
         StartCoroutine(ShootCooldown());
@@ -135,6 +147,18 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(shootCooldown);
         canShoot = true;
+    }
+
+    // Method to add ammo
+    public void AddAmmo(int amount)
+    {
+        BulletCount += amount;
+    }
+
+    // Method to get current ammo count (optional for UIController updates)
+    public int GetCurrentBulletCount()
+    {
+        return BulletCount;
     }
 
     public void TakeDamage(int damage)

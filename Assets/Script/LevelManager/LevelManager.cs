@@ -11,10 +11,6 @@ public class LevelManager : MonoBehaviour
         {
             LoadNextLevel(); // Load the next level
         }
-        else
-        {
-            Debug.Log("There are still enemies to defeat!");
-        }
     }
 
     private bool AreAllEnemiesDead()
@@ -80,7 +76,7 @@ public class LevelManager : MonoBehaviour
                 break;
 
             default:
-                Debug.LogError("Unknown scene: " + currentScene.name);
+                Debug.Log("Unknown scene: " + currentScene.name);
                 break;
         }
     }
