@@ -584,6 +584,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7920219489812343576, guid: 6592d578e1caa2f4686a44930fd1da59, type: 3}
   m_PrefabInstance: {fileID: 7715428107899254378}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &482521831 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2500430229192286899, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+  m_PrefabInstance: {fileID: 6885233044330578984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,6 +1238,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1613342375 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8127625206896554964, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+  m_PrefabInstance: {fileID: 6885233044330578984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1624969107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,6 +1434,11 @@ MonoBehaviour:
   m_AmplitudeGain: 1
   m_FrequencyGain: 1
   mNoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!1 &1789356796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6056872719724947098, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+  m_PrefabInstance: {fileID: 6885233044330578984}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1918347417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6010,9 +6037,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+      propertyPath: gameOverCanvas
+      value: 
+      objectReference: {fileID: 1789356796}
+    - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 7201122616078512805}
+    - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+      propertyPath: gameOverMenuButtons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+      propertyPath: gameOverMenuButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1613342375}
+    - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+      propertyPath: gameOverMenuButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 482521831}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

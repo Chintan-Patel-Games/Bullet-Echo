@@ -86,7 +86,7 @@ public class LobbyManager : MonoBehaviour
 
     public void OnPlayButtonClick()
     {
-        // Load the first level (replace "Level1" with your actual level name or index)
+        Time.timeScale = 1f;
         SceneManager.LoadScene((int)SceneName.Level1);
     }
 

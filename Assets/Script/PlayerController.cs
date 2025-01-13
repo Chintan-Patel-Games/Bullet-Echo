@@ -18,8 +18,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 100; // Maximum health of the player
-    private int currentHealth;
-    public int CurrentHealth => currentHealth; // Expose current health
+    public int CurrentHealth { get; private set; }
 
 
     [SerializeField] private LevelManager levelManager; // Reference to the LevelManager
@@ -28,10 +27,10 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false; // To track if the player is currently moving
     private bool isRotating = false; // To track if the player is currently rotating
 
-
-    void Start()
+    void Awake()
     {
-        currentHealth = maxHealth; // Initialize health to maximum
+        if (CurrentHealth == 0)
+            ResetHealth();
     }
 
     void Update()
@@ -161,11 +160,16 @@ public class PlayerController : MonoBehaviour
         return BulletCount;
     }
 
+    public void ResetHealth()
+    {
+        CurrentHealth = 100;  // Set health back to full or your desired initial value
+    }
+
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        CurrentHealth -= damage;
 
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
         }
