@@ -47,6 +47,9 @@ A 2D tactical shooter where players navigate a grid-based environment, avoiding 
 - [ ] Sound and UI implementation.
 - [ ] Testing and optimization.
 
+## Gameplay Video
+ - https://drive.google.com/file/d/1Z3LBzfZKMzjb4__yZNttiSwWp3Koaxzg/view?usp=sharing
+
 ## Contact
 - Developer: Chintan Patel
 - Email: chintanpatelit024@gmail.com
