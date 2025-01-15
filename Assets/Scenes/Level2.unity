@@ -2365,10 +2365,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 2302288112752007650, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4116760165240849095, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2449,10 +2445,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6056872719724947098, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 162355556}
     - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
       propertyPath: playerController
       value: 

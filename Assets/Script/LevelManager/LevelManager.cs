@@ -5,15 +5,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemiesParent; // Array of enemies in the level
 
-    public void CompleteLevel()
-    {
-        if (AreAllEnemiesDead())
-        {
-            LoadNextLevel(); // Load the next level
-        }
-    }
-
-    private bool AreAllEnemiesDead()
+    public bool AreAllEnemiesDead()
     {
         // Get all children of the "Enemies" parent GameObject
         Transform[] enemyTransforms = enemiesParent.GetComponentsInChildren<Transform>();
@@ -57,7 +49,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // Optionally, add a method to load the next scene based on the current one
     public void LoadNextLevel()
     {
         Scene currentScene = SceneManager.GetActiveScene();
@@ -81,7 +72,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // Optionally, you can add methods to handle loading the previous level or restart
     public void ReloadCurrentLevel()
     {
         Scene currentScene = SceneManager.GetActiveScene();
