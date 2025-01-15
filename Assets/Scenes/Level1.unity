@@ -849,6 +849,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 1125046754}
+    - target: {fileID: 8658569738247440324, guid: cbb0a4e1953476c42b0b7de06280421d, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 7201122616078512805}

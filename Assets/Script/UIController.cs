@@ -1,17 +1,19 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private LevelManager levelManager;
     [SerializeField] private TextMeshProUGUI bulletText;
     [SerializeField] private GameObject pauseMenuCanvas;
+    [SerializeField] private GameObject gameWinCanvas;
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject defaultSelectedButton;
     [SerializeField] private Selectable[] pauseMenuButtons;
+    [SerializeField] private Selectable[] gameWinMenuButtons;
     [SerializeField] private Selectable[] gameOverMenuButtons;
 
     private bool isPaused = false;
@@ -20,19 +22,13 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        // Check if this is a lobby scene and destroy the UIController if so
-        if (IsLobbyScene())
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         UpdateBulletUI(playerController.BulletCount);
 
         if (pauseMenuCanvas != null) pauseMenuCanvas.SetActive(false);
+        if (gameWinCanvas != null) gameWinCanvas.SetActive(false);
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
 
         if (defaultSelectedButton != null)
@@ -75,8 +71,6 @@ public class UIController : MonoBehaviour
         isPaused = true;
         pauseMenuCanvas.SetActive(true);
         Time.timeScale = 0f;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
 
         if (pauseMenuButtons.Length > 0)
             SelectButton(pauseMenuButtons[0]);
@@ -95,14 +89,33 @@ public class UIController : MonoBehaviour
     {
         isGameOver = false;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        levelManager.ReloadCurrentLevel();
+    }
+
+    public void NextLevel()
+    {
+        isGameOver = false;
+        Time.timeScale = 1f;
+        levelManager.LoadNextLevel();
     }
 
     public void ReturnToLobby()
     {
         isGameOver = false;
         Time.timeScale = 1f;
-        SceneManager.LoadScene((int)SceneName.Lobby);
+        levelManager.LoadScene(SceneName.Lobby);
+    }
+
+    public void TriggerGamewin()
+    {
+        if (levelManager.AreAllEnemiesDead())
+        {
+            Time.timeScale = 0f;
+            gameWinCanvas.SetActive(true);
+
+            if (gameWinMenuButtons.Length > 0)
+                SelectButton(gameWinMenuButtons[0]);
+        }
     }
 
     public void TriggerGameOver()
@@ -110,8 +123,6 @@ public class UIController : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0f;
         gameOverCanvas.SetActive(true);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
 
         if (gameOverMenuButtons.Length > 0)
             SelectButton(gameOverMenuButtons[0]);
@@ -177,19 +188,5 @@ public class UIController : MonoBehaviour
                 break;
             }
         }
-    }
-
-    private bool IsLobbyScene()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        bool isLobby = currentSceneName == SceneName.Lobby.ToString();
-
-        if (isLobby)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-
-        return isLobby;
     }
 }

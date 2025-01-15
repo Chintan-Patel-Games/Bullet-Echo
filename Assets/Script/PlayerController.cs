@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
         // Check if the tile is the finish tile
         if (tile == finishTile)
         {
-            levelManager.CompleteLevel(); // Call CompleteLevel method from LevelManager
+            uiController.TriggerGamewin(); // Call CompleteLevel method from LevelManager
         }
     }
 
