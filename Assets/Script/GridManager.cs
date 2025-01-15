@@ -4,11 +4,11 @@ using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap tilemap;
-    [SerializeField] private TileBase walkableTile;
+    [SerializeField] private Tilemap tilemap; // Reference to the Tilemap
+    [SerializeField] private TileBase walkableTile; // Tile that represents walkable areas
 
-    private int rows, columns; // Grid size
-    private bool[,] walkableCells; // Walkable status of each cell
+    private int rows, columns; // Grid dimensions
+    private bool[,] walkableCells; // Array to store walkability of each cell
 
     void Start()
     {
@@ -37,32 +37,35 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public bool IsWalkable(Vector2Int position)
+    public bool IsWalkable(Vector2 position)
     {
-        if (position.x >= 0 && position.x < columns &&
-            position.y >= 0 && position.y < rows)
+        Vector2Int gridPosition = new Vector2Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y));
+
+        if (gridPosition.x >= 0 && gridPosition.x < columns &&
+            gridPosition.y >= 0 && gridPosition.y < rows)
         {
-            return walkableCells[position.x, position.y];
+            bool isWalkable = walkableCells[gridPosition.x, gridPosition.y];
+            return isWalkable;
         }
-        return false; // Out-of-bounds cells are not walkable
+        return false;
     }
 
-    public List<Vector2Int> GetNeighbors(Vector2Int cell)
+    public List<Vector2> GetNeighbors(Vector2 cell)
     {
-        List<Vector2Int> neighbors = new List<Vector2Int>();
-
+        List<Vector2> neighbors = new List<Vector2>();
+        
         // Define possible neighbor directions (N, S, E, W)
-        Vector2Int[] directions = new Vector2Int[]
+        Vector2[] directions = new Vector2[]
         {
-            new Vector2Int(0, 1),  // Up
-            new Vector2Int(0, -1), // Down
-            new Vector2Int(1, 0),  // Right
-            new Vector2Int(-1, 0)  // Left
+            new Vector2(0, 1),  // Up
+            new Vector2(0, -1), // Down
+            new Vector2(1, 0),  // Right
+            new Vector2(-1, 0)  // Left
         };
 
-        foreach (Vector2Int direction in directions)
+        foreach (Vector2 direction in directions)
         {
-            Vector2Int neighbor = cell + direction;
+            Vector2 neighbor = cell + direction;
 
             // Ensure the neighbor is within bounds and walkable
             if (IsWalkable(neighbor))
@@ -74,23 +77,26 @@ public class GridManager : MonoBehaviour
         return neighbors;
     }
 
-    public Vector2Int GetGridPosition(Vector3 worldPosition)
+    public Vector2 GetGridPosition(Vector3 worldPosition)
     {
         Vector3Int cellPosition = tilemap.WorldToCell(worldPosition);
-        return new Vector2Int(cellPosition.x, cellPosition.y);
+        return new Vector2(cellPosition.x, cellPosition.y);
     }
 
-    public Vector3 GetWorldPosition(Vector2Int gridPosition)
+    public Vector3 GetWorldPosition(Vector2 gridPosition)
     {
-        Vector3Int cellPosition = new Vector3Int(gridPosition.x, gridPosition.y, 0);
-        return tilemap.GetCellCenterWorld(cellPosition);
+        Vector3Int cellPosition = new Vector3Int(Mathf.FloorToInt(gridPosition.x), Mathf.FloorToInt(gridPosition.y), 0);
+        Vector3 worldPosition = tilemap.GetCellCenterWorld(cellPosition);
+        return worldPosition;
     }
 
-    public bool IsValidPosition(Vector2Int position)
+    public bool IsValidPosition(Vector2 position)
     {
-        int width = columns;
-        int height = rows;
+        Vector2Int gridPosition = new Vector2Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y));
 
-        return position.x >= 0 && position.x < width && position.y >= 0 && position.y < height;
+        bool isValid = gridPosition.x >= 0 && gridPosition.x < columns &&
+                       gridPosition.y >= 0 && gridPosition.y < rows;
+
+        return isValid;
     }
 }

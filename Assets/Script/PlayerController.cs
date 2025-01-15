@@ -16,27 +16,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shootCooldown = 0.35f;  // Time between shots
     public int BulletCount { get; private set; } = 5; // Example default bullet count
 
-    [Header("Health Settings")]
-    [SerializeField] private int maxHealth = 100; // Maximum health of the player
-    private int currentHealth;
-    public int CurrentHealth => currentHealth; // Expose current health
-
-
     [SerializeField] private LevelManager levelManager; // Reference to the LevelManager
+    [SerializeField] private UIController uiController; // Reference to the UIController
 
     private bool canShoot = true;
+    private bool isDead = false;
     private bool isMoving = false; // To track if the player is currently moving
     private bool isRotating = false; // To track if the player is currently rotating
 
-
-    void Start()
-    {
-        currentHealth = maxHealth; // Initialize health to maximum
-    }
-
     void Update()
     {
-        if (!isMoving && !isRotating) // Allow input only when not moving or rotating
+        if (!isMoving && !isRotating && !isDead) // Allow input only when not moving, rotating, or dead
         {
             if (Input.GetKey(KeyCode.W)) StartCoroutine(Move(transform.up));
             else if (Input.GetKey(KeyCode.S)) StartCoroutine(Move(-transform.up));
@@ -45,7 +35,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Handle shooting
-        if (Input.GetKey(KeyCode.Space) && canShoot && !isRotating)
+        if (Input.GetKey(KeyCode.Space) && canShoot && !isRotating && !isDead)
         {
             Shoot();
         }
@@ -155,24 +145,17 @@ public class PlayerController : MonoBehaviour
         BulletCount += amount;
     }
 
-    // Method to get current ammo count (optional for UIController updates)
-    public int GetCurrentBulletCount()
+    public void Die()
     {
-        return BulletCount;
-    }
+        if (isDead) return; // Avoid multiple death triggers
+        isDead = true;
 
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
         gameObject.SetActive(false); // Disable the player object
+
+        // Trigger Game Over UI
+        if (uiController != null)
+        {
+            uiController.TriggerGameOver();
+        }
     }
 }

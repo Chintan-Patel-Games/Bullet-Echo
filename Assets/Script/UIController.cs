@@ -7,13 +7,15 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI bulletText;
     [SerializeField] private GameObject pauseMenuCanvas;
-    [SerializeField] private GameObject defaultSelectedButton; // The button to select when the menu opens
-    [SerializeField] private Selectable[] pauseMenuButtons; // Array of buttons for navigation in pause menu
+    [SerializeField] private GameObject gameOverCanvas;
+    [SerializeField] private GameObject defaultSelectedButton;
+    [SerializeField] private Selectable[] pauseMenuButtons;
+    [SerializeField] private Selectable[] gameOverMenuButtons;
 
     private bool isPaused = false;
+    private bool isGameOver = false;
     private int currentButtonIndex = 0;
 
     private void Start()
@@ -25,21 +27,14 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        // Hide and lock the cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        // Update the UI initially
-        UpdateHealthUI(playerController.CurrentHealth);
         UpdateBulletUI(playerController.BulletCount);
 
-        // Ensure the pause menu is hidden at the start
-        if (pauseMenuCanvas != null)
-        {
-            pauseMenuCanvas.SetActive(false);
-        }
+        if (pauseMenuCanvas != null) pauseMenuCanvas.SetActive(false);
+        if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
 
-        // Select the default button
         if (defaultSelectedButton != null)
         {
             EventSystem.current.SetSelectedGameObject(defaultSelectedButton);
@@ -49,7 +44,6 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        // Toggle Pause Menu with Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -58,90 +52,89 @@ public class UIController : MonoBehaviour
                 PauseGame();
         }
 
-        // Handle keyboard navigation in pause menu
         if (isPaused)
-        {
             HandlePauseMenuNavigation();
-        }
 
-        // Continuously update the UI if needed
-        UpdateHealthUI(playerController.CurrentHealth);
-        UpdateBulletUI(playerController.BulletCount);
-    }
-
-    private bool IsLobbyScene()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        bool isLobby = currentSceneName == "Lobby"; // Replace "Lobby" with your lobby scene name
-
-        if (isLobby)
+        // Handle navigation for Game Over menu
+        if (isGameOver)
         {
-            // Make the cursor visible and unlock it
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            HandleGameOverMenuNavigation();
+            return; // Skip other updates if Game Over is active
         }
 
-        return isLobby;
-    }
-
-    public void UpdateHealthUI(int currentHealth)
-    {
-        healthText.text = "Health " + currentHealth;
+        UpdateBulletUI(playerController.BulletCount);
     }
 
     public void UpdateBulletUI(int bulletCount)
     {
-        bulletText.text = "Bullets " + bulletCount;
+        bulletText.text = "Bullets : " + bulletCount;
     }
 
     public void PauseGame()
     {
         isPaused = true;
-        pauseMenuCanvas.SetActive(true); // Show the pause menu
-        Time.timeScale = 0f; // Freeze game time
-        Cursor.visible = true; // Show the cursor
+        pauseMenuCanvas.SetActive(true);
+        Time.timeScale = 0f;
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        // Select the first button in the pause menu
         if (pauseMenuButtons.Length > 0)
-        {
             SelectButton(pauseMenuButtons[0]);
-        }
     }
 
     public void ResumeGame()
     {
         isPaused = false;
-        pauseMenuCanvas.SetActive(false); // Hide the pause menu
-        Time.timeScale = 1f; // Resume game time
-        Cursor.visible = false; // Hide the cursor
+        pauseMenuCanvas.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void RestartLevel()
     {
-        Time.timeScale = 1f; // Reset game time
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reload current scene
+        isGameOver = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ReturnToLobby()
     {
-        Time.timeScale = 1f; // Reset game time
-        SceneManager.LoadScene((int)SceneName.Lobby); // Load the Lobby scene
+        isGameOver = false;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene((int)SceneName.Lobby);
+    }
+
+    public void TriggerGameOver()
+    {
+        isGameOver = true;
+        Time.timeScale = 0f;
+        gameOverCanvas.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        if (gameOverMenuButtons.Length > 0)
+            SelectButton(gameOverMenuButtons[0]);
     }
 
     private void HandlePauseMenuNavigation()
     {
-        if (pauseMenuButtons == null || pauseMenuButtons.Length == 0) return;
+        HandleMenuNavigation(pauseMenuButtons);
+    }
+
+    private void HandleGameOverMenuNavigation()
+    {
+        HandleMenuNavigation(gameOverMenuButtons);
+    }
+
+    private void HandleMenuNavigation(Selectable[] menuButtons)
+    {
+        if (menuButtons == null || menuButtons.Length == 0) return;
 
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            SelectPreviousButton();
-        }
+            SelectPreviousButton(menuButtons);
         else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            SelectNextButton();
-        }
+            SelectNextButton(menuButtons);
 
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
@@ -154,16 +147,16 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void SelectPreviousButton()
+    private void SelectPreviousButton(Selectable[] menuButtons)
     {
-        currentButtonIndex = (currentButtonIndex - 1 + pauseMenuButtons.Length) % pauseMenuButtons.Length;
-        SelectButton(pauseMenuButtons[currentButtonIndex]);
+        currentButtonIndex = (currentButtonIndex - 1 + menuButtons.Length) % menuButtons.Length;
+        SelectButton(menuButtons[currentButtonIndex]);
     }
 
-    private void SelectNextButton()
+    private void SelectNextButton(Selectable[] menuButtons)
     {
-        currentButtonIndex = (currentButtonIndex + 1) % pauseMenuButtons.Length;
-        SelectButton(pauseMenuButtons[currentButtonIndex]);
+        currentButtonIndex = (currentButtonIndex + 1) % menuButtons.Length;
+        SelectButton(menuButtons[currentButtonIndex]);
     }
 
     private void SelectButton(Selectable button)
@@ -184,5 +177,19 @@ public class UIController : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private bool IsLobbyScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        bool isLobby = currentSceneName == SceneName.Lobby.ToString();
+
+        if (isLobby)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        return isLobby;
     }
 }

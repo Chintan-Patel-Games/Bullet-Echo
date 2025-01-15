@@ -402,7 +402,6 @@ MonoBehaviour:
   - {x: 4, y: 4}
   - {x: 5, y: 4}
   - {x: 6, y: 4}
-  gridManager: {fileID: 0}
   moveSpeed: 2
   rotationDuration: 0.2
   torch: {fileID: 824812653752092324}
@@ -410,8 +409,8 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 6783406468271645931}
   shootCooldown: 0.5
   alertColor: {r: 1, g: 0, b: 0, a: 0.33333334}
-  normalColor: {r: 1, g: 1, b: 1, a: 0.33333334}
   player: {fileID: 0}
+  detectionRange: 4
 --- !u!1 &8966062043444487067
 GameObject:
   m_ObjectHideFlags: 0
