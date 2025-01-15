@@ -34,10 +34,9 @@ public class Bullet : MonoBehaviour
         // Handle enemy bullet hitting player
         if (originTag == "Enemy" && other.CompareTag("Player"))
         {
-            // Handle player damage or game over logic here
             Destroy(gameObject);  // Destroy bullet
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(20); // Deal 20 damage to the player
+            player.Die();
         }
     }
 }

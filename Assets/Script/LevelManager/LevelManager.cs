@@ -40,15 +40,15 @@ public class LevelManager : MonoBehaviour
         switch (sceneName)
         {
             case SceneName.Lobby:
-                SceneManager.LoadScene("Lobby");  // Replace with your actual scene name
+                SceneManager.LoadScene(SceneName.Lobby.ToString());  // Replace with your actual scene name
                 break;
 
             case SceneName.Level1:
-                SceneManager.LoadScene("Level1");
+                SceneManager.LoadScene(SceneName.Level1.ToString());
                 break;
 
             case SceneName.Level2:
-                SceneManager.LoadScene("Level2");
+                SceneManager.LoadScene(SceneName.Level2.ToString());
                 break;
 
             default:

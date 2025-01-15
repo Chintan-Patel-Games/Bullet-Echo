@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI bulletText;
     [SerializeField] private GameObject pauseMenuCanvas;
     [SerializeField] private GameObject gameOverCanvas;
@@ -31,7 +30,6 @@ public class UIController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
-        UpdateHealthUI(playerController.CurrentHealth);
         UpdateBulletUI(playerController.BulletCount);
 
         if (pauseMenuCanvas != null) pauseMenuCanvas.SetActive(false);
@@ -64,16 +62,7 @@ public class UIController : MonoBehaviour
             return; // Skip other updates if Game Over is active
         }
 
-        UpdateHealthUI(playerController.CurrentHealth);
         UpdateBulletUI(playerController.BulletCount);
-    }
-
-    public void UpdateHealthUI(int currentHealth)
-    {
-        healthText.text = "Health : " + currentHealth;
-
-        if (currentHealth <= 0 && !isGameOver)
-            TriggerGameOver();
     }
 
     public void UpdateBulletUI(int bulletCount)
@@ -106,7 +95,6 @@ public class UIController : MonoBehaviour
     {
         isGameOver = false;
         Time.timeScale = 1f;
-        playerController.ResetHealth();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -117,7 +105,7 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene((int)SceneName.Lobby);
     }
 
-    private void TriggerGameOver()
+    public void TriggerGameOver()
     {
         isGameOver = true;
         Time.timeScale = 0f;
@@ -194,7 +182,7 @@ public class UIController : MonoBehaviour
     private bool IsLobbyScene()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
-        bool isLobby = currentSceneName == "Lobby";
+        bool isLobby = currentSceneName == SceneName.Lobby.ToString();
 
         if (isLobby)
         {
