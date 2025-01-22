@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10f;  // Speed of the bullet
-    public float lifetime = 0.8f;  // Time before the bullet is destroyed
-    public string originTag;  // The tag of the shooter (e.g., "Player" or "Enemy")
+    [SerializeField] private float speed = 10f;  // Speed of the bullet
+    [SerializeField] private float lifetime = 0.8f;  // Time before the bullet is destroyed
+
+    private bool isPlayerBullet;  // Determines if the bullet belongs to the player
+
+    public void Initialize(bool playerBullet)
+    {
+        isPlayerBullet = playerBullet; // Set ownership when bullet is instantiated
+    }
 
     void Start()
     {
@@ -13,30 +19,27 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        if (originTag == "Player")
-            transform.Translate(Vector3.up * speed * Time.deltaTime); // Move bullet forward
-        else if (originTag == "Enemy")
-            transform.Translate(Vector3.right * speed * Time.deltaTime); // Move bullet forward
+        // Move the bullet based on its ownership
+        if (isPlayerBullet)
+            transform.Translate(Vector3.up * speed * Time.deltaTime); // Player bullet moves upward
+        else
+            transform.Translate(Vector3.right * speed * Time.deltaTime); // Enemy bullet moves rightward
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Avoid self-collision
-        if (other.CompareTag(originTag)) return;
-
         // Handle player bullet hitting enemy
-        if (originTag == "Player" && other.CompareTag("Enemy") && other is CircleCollider2D)
+        if (isPlayerBullet && other.TryGetComponent<EnemyAI>(out var enemy))
         {
-            Destroy(other.gameObject);  // Destroy enemy
+            Destroy(enemy.gameObject);  // Destroy enemy
             Destroy(gameObject);  // Destroy bullet
         }
 
         // Handle enemy bullet hitting player
-        if (originTag == "Enemy" && other.CompareTag("Player"))
+        if (!isPlayerBullet && other.TryGetComponent<PlayerController>(out var player))
         {
+            player.Die();  // Trigger player death
             Destroy(gameObject);  // Destroy bullet
-            PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            player.Die();
         }
     }
 }

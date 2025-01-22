@@ -104,7 +104,8 @@ public class EnemyAI : MonoBehaviour
         if (canShoot)
         {
             canShoot = false;
-            Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+            bullet.GetComponent<Bullet>().Initialize(false); // For enemy bullets
             StartCoroutine(ShootCooldown());
         }
     }

@@ -254,6 +254,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5751717317009636401, guid: 4f1b8f98d9046e74294864179d4af2e1, type: 3}
   bulletSpawnPoint: {fileID: 7844735419190335452}
   shootCooldown: 0.4
+  enemiesParent: {fileID: 5870101307109854148, guid: 10ebadd933024c94f9f4bd4fad6bf404, type: 3}
   levelManager: {fileID: 0}
   uiController: {fileID: 0}
 --- !u!1 &8713427502016363426

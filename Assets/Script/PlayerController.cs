@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shootCooldown = 0.35f;  // Time between shots
     public int BulletCount { get; private set; } = 5; // Example default bullet count
 
+    [SerializeField] private GameObject enemiesParent; // Array of enemies in the level
     [SerializeField] private LevelManager levelManager; // Reference to the LevelManager
     [SerializeField] private UIController uiController; // Reference to the UIController
 
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
         }
+
+        AreAllEnemiesDead();
     }
 
     private IEnumerator Move(Vector3 direction)
@@ -108,10 +111,31 @@ public class PlayerController : MonoBehaviour
         TileBase tile = tilemap.GetTile(cellPosition);
 
         // Check if the tile is the finish tile
-        if (tile == finishTile)
+        if (tile == finishTile && AreAllEnemiesDead())
         {
             uiController.TriggerGamewin(); // Call CompleteLevel method from LevelManager
         }
+    }
+
+    public bool AreAllEnemiesDead()
+    {
+        // Get all children of the "Enemies" parent GameObject
+        Transform[] enemyTransforms = enemiesParent.GetComponentsInChildren<Transform>();
+
+        foreach (Transform enemyTransform in enemyTransforms)
+        {
+            // Ignore the parent GameObject itself
+            if (enemyTransform != enemiesParent)
+            {
+                EnemyAI enemy = enemyTransform.GetComponent<EnemyAI>();
+                if (enemy != null) // Check if the enemy is alive
+                {
+                    return false; // If at least one enemy is alive, return false
+                }
+            }
+        }
+
+        return true; // If all enemies are dead, return true
     }
 
     void Shoot()
@@ -124,7 +148,8 @@ public class PlayerController : MonoBehaviour
         canShoot = false;
 
         // Instantiate the bullet at the spawn point and in the player's current rotation
-        Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+        bullet.GetComponent<Bullet>().Initialize(true); // For player bullets
 
         // Decrease the bullet count
         BulletCount--;

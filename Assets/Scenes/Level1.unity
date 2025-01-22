@@ -1209,7 +1209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9039176a9a920d4caca0f68bceb8dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesParent: {fileID: 1073219839}
 --- !u!4 &1125046755
 Transform:
   m_ObjectHideFlags: 0
@@ -5993,6 +5992,10 @@ PrefabInstance:
       propertyPath: uiController
       value: 
       objectReference: {fileID: 1432282718}
+    - target: {fileID: 7247394710180015791, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
+      propertyPath: enemiesParent
+      value: 
+      objectReference: {fileID: 1073219839}
     - target: {fileID: 7616831098086757112, guid: 95cb89b10e9cf5549acd805004a648aa, type: 3}
       propertyPath: m_Name
       value: Alan

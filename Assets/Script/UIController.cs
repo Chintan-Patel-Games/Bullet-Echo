@@ -108,14 +108,11 @@ public class UIController : MonoBehaviour
 
     public void TriggerGamewin()
     {
-        if (levelManager.AreAllEnemiesDead())
-        {
-            Time.timeScale = 0f;
-            gameWinCanvas.SetActive(true);
+        Time.timeScale = 0f;
+        gameWinCanvas.SetActive(true);
 
-            if (gameWinMenuButtons.Length > 0)
-                SelectButton(gameWinMenuButtons[0]);
-        }
+        if (gameWinMenuButtons.Length > 0)
+            SelectButton(gameWinMenuButtons[0]);
     }
 
     public void TriggerGameOver()

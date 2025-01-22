@@ -3,29 +3,6 @@ using UnityEngine.SceneManagement; // Required for scene management
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private GameObject enemiesParent; // Array of enemies in the level
-
-    public bool AreAllEnemiesDead()
-    {
-        // Get all children of the "Enemies" parent GameObject
-        Transform[] enemyTransforms = enemiesParent.GetComponentsInChildren<Transform>();
-
-        foreach (Transform enemyTransform in enemyTransforms)
-        {
-            // Ignore the parent GameObject itself
-            if (enemyTransform != enemiesParent)
-            {
-                EnemyAI enemy = enemyTransform.GetComponent<EnemyAI>();
-                if (enemy != null) // Check if the enemy is alive
-                {
-                    return false; // If at least one enemy is alive, return false
-                }
-            }
-        }
-
-        return true; // If all enemies are dead, return true
-    }
-
     // Method to load a scene by SceneName enum
     public void LoadScene(SceneName sceneName)
     {
