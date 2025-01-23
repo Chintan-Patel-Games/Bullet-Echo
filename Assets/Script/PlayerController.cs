@@ -142,6 +142,7 @@ public class PlayerController : MonoBehaviour
     {
         if (BulletCount <= 0)
         {
+            SoundManager.Instance.PlaySFX(SFXList.No_Ammo);
             return;
         }
 
@@ -150,6 +151,8 @@ public class PlayerController : MonoBehaviour
         // Instantiate the bullet at the spawn point and in the player's current rotation
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
         bullet.GetComponent<Bullet>().Initialize(true); // For player bullets
+
+        SoundManager.Instance.PlaySFX(SFXList.Shoot);
 
         // Decrease the bullet count
         BulletCount--;

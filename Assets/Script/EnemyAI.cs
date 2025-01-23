@@ -106,6 +106,7 @@ public class EnemyAI : MonoBehaviour
             canShoot = false;
             GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, transform.rotation);
             bullet.GetComponent<Bullet>().Initialize(false); // For enemy bullets
+            SoundManager.Instance.PlaySFX(SFXList.Shoot);
             StartCoroutine(ShootCooldown());
         }
     }

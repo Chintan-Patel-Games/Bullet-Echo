@@ -3,6 +3,21 @@ using UnityEngine.SceneManagement; // Required for scene management
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance { get; private set; } // Singleton instance
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this; // Set the instance
+            DontDestroyOnLoad(gameObject); // Keep this object across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instance
+        }
+    }
+
     // Method to load a scene by SceneName enum
     public void LoadScene(SceneName sceneName)
     {
@@ -21,7 +36,7 @@ public class LevelManager : MonoBehaviour
                 break;
 
             default:
-                Debug.LogError("Scene not found: " + sceneName);
+                Debug.Log("Scene not found: " + sceneName);
                 break;
         }
     }

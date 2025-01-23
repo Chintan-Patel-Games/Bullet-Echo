@@ -12,6 +12,7 @@ public class AmmoPickup : MonoBehaviour
         {
             // Add ammo to the player
             player.AddAmmo(ammoAmount);
+            SoundManager.Instance.PlaySFX(SFXList.Ammo_Pickup);
 
             // Destroy the pickup game object
             Destroy(gameObject);
