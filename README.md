@@ -48,9 +48,14 @@ A 2D tactical shooter where players navigate a grid-based environment, avoiding 
 - [ ] Testing and optimization.
 
 ## Gameplay Video
- - https://drive.google.com/file/d/1Z3LBzfZKMzjb4__yZNttiSwWp3Koaxzg/view?usp=sharing
+ - [Gameplay Demo Video](https://drive.google.com/file/d/1Z3LBzfZKMzjb4__yZNttiSwWp3Koaxzg/view?usp=sharing)
 
-## Contact
-- Developer: Chintan Patel
-- Email: chintanpatelit024@gmail.com
-- GitHub: https://github.com/Chintan-Patel-Games
+## 🧑‍💻 Author
+
+**Chintan Patel**
+
+💼 [LinkedIn](https://www.linkedin.com/in/chintanpatel024)  
+
+🎮 [itch.io](https://chintan-patel-games.itch.io)  
+
+🐙 [GitHub](https://github.com/Chintan-Patel-Games)
